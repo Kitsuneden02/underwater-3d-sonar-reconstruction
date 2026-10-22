@@ -64,8 +64,9 @@ During real-world tunnel inspections, unmodeled magnetic disturbances and DVL dr
 | **Level 3 (Rail Mode)** | `lvl3_rail_odom` | $X, Z$ (Pure longitudinal + depth projection) | Severe IMU yaw divergence in rectilinear adduction tunnels. |
 
 <div align="center">
-  <img src="./figures/pool_contingency_lvl3.png" alt="Level 3 contingency reconstruction vs EKF/UKF divergence during pool fault injection" width="75%" />
-  <p><em>Pool validation under IMU fault conditions: successful 3D structure recovery using Level 3 contingency mode (white point cloud) contrasted against diverging EKF (yellow) and UKF (red) trajectories.</em></p>
+  <img src="./figures/inspeccion_real_telemetria_12x.gif" alt="Real-time field inspection telemetry and 3D reconstruction (12x)" width="44%" />
+  <img src="./figures/animacion_helicoide_fusion.gif" alt="Helical scan unrolling and multi-sensor fusion animation" width="53%" />
+  <p><em>Left: Real-time field inspection telemetry and 3D tunnel profiling in RViz2 (12x speed). Right: Helical scan formation and multi-sensor trajectory fusion during longitudinal ROV motion.</em></p>
 </div>
 
 ---
