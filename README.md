@@ -19,7 +19,7 @@ Inspecting flooded hydroelectric adduction tunnels with Remotely Operated Vehicl
 2. **Helical Motion Distortion (*Motion Skew*):** Mechanical profiling sonars (such as the **Imagenex 831A**) rotate a single piezoceramic transducer step-by-step over $360^\circ$. At a $6\text{ m}$ range, a full sweep requires $\sim 3.3\text{ s}$ ($\sim 0.3\text{ Hz}$). As the ROV advances longitudinally during a sweep, the resulting cross-section is stretched into a 3D helix rather than a planar ring.
 3. **Inertial Drift & Acoustic Dropouts:** Magnetic interference and gyroscope bias degrade IMU heading estimates over multi-hour missions, while Doppler Velocity Logs (DVL) suffer intermittent bottom-lock dropouts over uneven tunnel floors.
 
-This work presents an end-to-end architecture combining **asynchronous multi-sensor state estimation (15-DOF EKF/UKF)**, a **3-tier odometry contingency system**, a **Gazebo Harmonic + ROS 2 Jazzy simulation benchmark**, and an **11-stage offline 3D point cloud registration pipeline**, validated both in simulation and across a **1.8 km hydroelectric tunnel inspection in Central America**.
+This work presents an end-to-end architecture combining **asynchronous multi-sensor state estimation (15-DOF EKF/UKF)**, a **3-tier odometry contingency system**, a **Gazebo Harmonic + ROS 2 Jazzy simulation benchmark**, and an **11-stage offline 3D point cloud registration pipeline**, validated both in simulation and across a **1.8 km hydroelectric tunnel inspection**.
 
 <div align="center">
   <img src="./figures/gazebo_tunnel_bluerov2.jpg" alt="BlueROV2 inside the procedurally generated tunnel in Gazebo Harmonic" width="48%" />
@@ -31,7 +31,7 @@ This work presents an end-to-end architecture combining **asynchronous multi-sen
 
 ## 1. Multi-Sensor Fusion & State Estimation Architecture
 
-To estimate the 6-DOF pose of the ROV in GPS-denied tunnels, a dual filter architecture was implemented on top of `robot_localization` in **ROS 2 Jazzy**, running an **Extended Kalman Filter (EKF)** and an **Unscented Kalman Filter (UKF)** in parallel over the same 15-dimensional state vector:
+To estimate the 6-DOF pose of the ROV in GPS-denied tunnels, custom **ROS 2 Jazzy** sensor translation, covariance adaptation, and TF/odometry contingency nodes were implemented in **Python and C++** (`dvl_translator`, `depth_republisher`, `pose_to_tf`, `lvl2_controlled_odom`, `lvl3_rail_odom`), feeding a dual **Extended Kalman Filter (EKF)** and **Unscented Kalman Filter (UKF)** architecture (`robot_localization`) operating in parallel over the same 15-dimensional state vector:
 
 $$\mathbf{x} = [x, y, z, \phi, \theta, \psi, v_x, v_y, v_z, \omega_x, \omega_y, \omega_z, a_x, a_y, a_z]^T$$
 
