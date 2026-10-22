@@ -64,9 +64,8 @@ During real-world tunnel inspections, unmodeled magnetic disturbances and DVL dr
 | **Level 3 (Rail Mode)** | `lvl3_rail_odom` | $X, Z$ (Pure longitudinal + depth projection) | Severe IMU yaw divergence in rectilinear adduction tunnels. |
 
 <div align="center">
-  <img src="./figures/inspeccion_real_telemetria_12x.gif" alt="Real-time field inspection telemetry and 3D reconstruction (12x)" width="44%" />
-  <img src="./figures/animacion_helicoide_fusion.gif" alt="Helical scan unrolling and multi-sensor fusion animation" width="53%" />
-  <p><em>Left: Real-time field inspection telemetry and 3D tunnel profiling in RViz2 (12x speed). Right: Helical scan formation and multi-sensor trajectory fusion during longitudinal ROV motion.</em></p>
+  <img src="./figures/inspeccion_real_telemetria_12x.gif" alt="Real-time field inspection telemetry and 3D reconstruction (12x)" width="58%" />
+  <p><em>Real-time field inspection telemetry and 3D tunnel profiling in RViz2 (12x speed) using the contingency odometry pipeline.</em></p>
 </div>
 
 ---
@@ -124,6 +123,11 @@ $$t_i = t_{\text{base}} + \left(\frac{\theta_i + \pi}{2\pi}\right) \cdot \frac{1
 Instead of projecting the entire $360^\circ$ scan from a single snapshot pose, [`scripts/helical_reconstruction.py`](./scripts/helical_reconstruction.py) interpolates the vehicle position $\mathbf{p}(t_i)$ linearly and orientation $\mathbf{q}(t_i) \in S^3$ via Normalized Linear Interpolation (NLERP) with hemisphere correction ($\mathbf{q}_1 \leftarrow -\mathbf{q}_1$ if $\mathbf{q}_0 \cdot \mathbf{q}_1 < 0$), transforming all $N$ beams in vectorized form:
 
 $$\mathbf{p}_i^{\text{global}} = \mathbf{R}(\mathbf{q}(t_i)) \, \mathbf{R}_{\text{sensor}} \, \mathbf{p}_i^{\text{local}} + \mathbf{p}(t_i)$$
+
+<div align="center">
+  <img src="./figures/animacion_helicoide_fusion.gif" alt="Helical motion distortion and 3D scan formation during ROV longitudinal advance" width="70%" />
+  <p><em>Helical motion distortion (motion skew): what appears as a planar 2D cross-section in frontal projection is revealed in 3D as a stretched helical spiral caused by the longitudinal displacement ($\Delta X$) of the ROV during a single $360^\circ$ mechanical sonar sweep.</em></p>
+</div>
 
 <div align="center">
   <img src="./figures/sim_cloudcompare_interior.png" alt="Interior longitudinal view in CloudCompare" width="32%" />
